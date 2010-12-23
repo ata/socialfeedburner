@@ -14,7 +14,9 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'mediagenerator',
     # Apps
-    'mainapp',
+    'socialauth',
+    'newsfeed',
+    'twitterauth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -42,6 +44,9 @@ ROOT_URLCONF = 'urls'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+
+AUTH_PROFILE_MODULE = 'socialauth.UserProfile'
+
 
 # MEDIA GENERATOR SETTING
 
@@ -91,5 +96,14 @@ CONSUMER_KEY = '6gFhpxXSeSi2OHGpAnWZw'
 CONSUMER_SECRET = 'Wrz4sJrhHvZlrGUU6Djp85GWX0DuYM6q09gs42Gvq4'
 
 PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+
+# TWITTER SETTING
+if DEBUG:
+    TWITTER_CUSTOMER_KEY = 'mSfl4UC4pQgILTqNWGaoA'
+    TWITTER_CUSTOMER_SECRET = 'Fls41aDyjt8T4Qqw3XS1Zsu58kpRJK7dp2fCeFUYBU'
+else:
+    TWITTER_CUSTOMER_KEY = 'Jw1CVRMB6g0T4tqSzAPI4g'
+    TWITTER_CUSTOMER_SECRET = 'VM6OTzlhbyDsH11JiOZvS6689TnVUNHfwa9C8Bs7BM'
+
 
 

@@ -16,6 +16,12 @@ p {
     /*letter-spacing: 0.1mm;
     word-spacing: 0.1mm;*/
 }
+
+.ac{
+    text-align:center;
+}
+
+
 /**************************************/
 /*              HEADER                */
 /**************************************/
@@ -198,6 +204,9 @@ ul#topnav a:hover, ul#topnav a:active {
     background:#E6E6FA;
 }
 
+#connect-container{
+    margin:20px 0;
+}
 
 
 

@@ -12,7 +12,7 @@
     {% include_media 'main.js' %}
     {% block extra_head %}
     {% endblock extra_head %}
-    <title>Dompet Mini - {% block head_title %}{% endblock %}</title>
+    <title>Social Feed Burner - {% block head_title %}{% endblock %}</title>
 </head>
 <body>
     <div id="header">
@@ -20,8 +20,9 @@
             <div class="span-18" id="webname">
                 <h1>Social Feed Burner</h1>
             </div>
-            <div class="span-6 last" id="headmenu">
-                
+            <div class="span-6 last">
+                {% block logout %}
+                {% endblock logout %}
             </div>
         </div>
     </div>
