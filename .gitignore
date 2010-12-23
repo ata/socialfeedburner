@@ -1,0 +1,9 @@
+*.pyc
+*.geany
+_generated_media*
+*.db
+*.project
+.DS_Store
+__MAC__
+.pydevproject
+.geanyprj

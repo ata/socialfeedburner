@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load media %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+    <div class="span-18 content">
+        <div id="posts">
+            {% for post in posts %}
+            <div class="post span-18 last">
+                <span class="timestamp" style="display:none">{{ post.get_timestamp }}</span>
+                <img src="{% media_url 'images/avatar_s.jpg' %}" />
+                <span class="type {{ post.type.lower }}">{{ post.get_type_display }}</span> 
+                <span class="amount">{{ post.amount|intcomma }}</span> 
+                <span class="concat-word">{{ post.get_concat_word }}</span> 
+                <span class="content">{{ post.content }}</span> 
+            </div>
+            {% endfor %}
+        </div>
+        <div class="span-18 last" id="loading">Loading...</div>
+    </div>
+    <div class="span-5 sidebar">
+        
+    </div>
+{% endblock content %}

@@ -1,0 +1,5 @@
+indexes:
+- kind: django_content_type
+  properties:
+  - name: app_label
+  - name: name
