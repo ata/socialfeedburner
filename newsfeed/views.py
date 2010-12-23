@@ -7,10 +7,10 @@ from socialauth.decorators import need_profile
 def index(request):
     return render_to_response('newsfeed/index.html',{'user': request.user})
 
-@login_required
+@need_profile
 def newest(request):
     return HttpResponse('index')
     
-@login_required
+@need_profile
 def older(request):
     return HttpResponse('index')

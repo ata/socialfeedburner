@@ -55,7 +55,7 @@ def twitter_connect_done(request):
     request.session['user_id'] = twitter.user.id
     del request.session['token']
     
-    return HttpResponseRedirect(reverse('socialauth_profile'))
+    return HttpResponseRedirect(reverse('newsfeed'))
 
     
 def facebook_connect(request):
