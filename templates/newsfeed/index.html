@@ -23,9 +23,16 @@ jQuery(document).ready(function(){
 {% endblock logout %}
 {% block content %}
 <div class="span-24 content">
+    {% if user.profile.has_connected %}
     <div id="posts">
-        
+        User connected
     </div>
+    {% else %}
+    <a href="{% url socialauth_twitter_connect %}">
+        <img src="{% media_url 'images/connect-twitter.png' %}">
+    </a>
+    {% endif %}
+    
     <div class="span-18 last" id="loading">Loading...</div>
 </div>
 {% endblock content %}
