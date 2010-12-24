@@ -28,7 +28,8 @@ class TwitterUserProfile(models.Model):
     """
     screen_name = models.CharField(max_length=200, unique=True, db_index=True)
     user = models.ForeignKey(User, related_name='twitter_profiles')
-    oauth_token = models.CharField(max_length=255, blank=True, null=True)
+    oauth_token = models.CharField(max_length=500, blank=True, null=True)
+    oauth_token_key = models.CharField(max_length=255, blank=True, null=True)
     oauth_token_secret = models.CharField(max_length=255, blank=True, \
                                     null=True)
     profile_image_url = models.URLField(blank=True, null=True)

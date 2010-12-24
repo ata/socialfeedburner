@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from oauth import oauth
-from socialauth.utils import *
+from socialauth.utils import twitter
 from socialauth.models import *
 
 def index(request):
@@ -24,11 +24,9 @@ def profile(request):
     return render_to_response('socialauth/profile.html', {'form': form ,})
 
 def twitter_connect(request):
-    #if request.user: 
-    #    return HttpResponseRedirect(reverse('newsfeed'))
-    token = get_unauthorized_token()
+    token = twitter.get_unauthorized_token()
     request.session['token'] = token.to_string()
-    return HttpResponseRedirect(get_authorization_url(token))
+    return HttpResponseRedirect(twitter.get_authorization_url(token))
 
 def twitter_connect_done(request):
     token = request.session.get('token', None)
@@ -37,22 +35,23 @@ def twitter_connect_done(request):
     token = oauth.OAuthToken.from_string(token)
     if token.key != request.GET.get('oauth_token', 'no-token'):
         return render_to_response('socialauth/twitter_connect_done.html', {'mismatch': True})
-    token = get_authorized_token(token)
+    token = twitter.get_authorized_token(token)
 
     # Actually login
-    obj = is_authorized(token)
+    obj = twitter.is_authorized(token)
     if obj is None:
         return render_to_response('socialauth/twitter_connect_done.html', {'username': True})
     try: 
-        twitter = TwitterUserProfile.objects.get(\
+        twitter_profile = TwitterUserProfile.objects.get(\
                   screen_name=obj['screen_name'])
     except: 
-        twitter = TwitterUserProfile(screen_name=obj['screen_name'])
+        twitter_profile = TwitterUserProfile(screen_name=obj['screen_name'])
     
-    twitter.oauth_token = token.key
-    twitter.oauth_token_secret = token.secret
-    twitter.save()
-    request.session['user_id'] = twitter.user.id
+    twitter_profile.oauth_token = request.session['token']
+    twitter_profile.oauth_token_key = token.key
+    twitter_profile.oauth_token_secret = token.secret
+    twitter_profile.save()
+    request.session['user_id'] = twitter_profile.user.id
     del request.session['token']
     
     return HttpResponseRedirect(reverse('newsfeed'))

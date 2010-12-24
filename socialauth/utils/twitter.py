@@ -1,5 +1,4 @@
-# Taken almost verbatim from Henrik Lied's django-twitter-oauth app
-# http://github.com/henriklied/django-twitter-oauth
+# original from http://github.com/henriklied/django-twitter-oauth
 
 from django.conf import settings
 from django.utils import simplejson as json
@@ -8,17 +7,19 @@ import httplib
 
 signature_method = oauth.OAuthSignatureMethod_HMAC_SHA1()
 
-TWITTER_CUSTOMER_KEY = getattr(settings, 'TWITTER_CUSTOMER_KEY', 'OH HAI')
-TWITTER_CUSTOMER_SECRET = getattr(settings, 'TWITTER_CUSTOMER_SECRET', 'OH NOES')
+TWITTER_CONSUMER_KEY = getattr(settings, 'TWITTER_CONSUMER_KEY', 'OH HAI')
+TWITTER_CONSUMER_SECRET = getattr(settings, 'TWITTER_CONSUMER_SECRET', 'OH NOES')
 
 def consumer():
-    try: return consumer._consumer
+    try: 
+        return consumer._consumer
     except AttributeError:
-        consumer._consumer = oauth.OAuthConsumer(TWITTER_CUSTOMER_KEY, TWITTER_CUSTOMER_SECRET)
+        consumer._consumer = oauth.OAuthConsumer(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
         return consumer._consumer
 
 def connection():
-    try: return connection._connection
+    try: 
+        return connection._connection
     except AttributeError:
         connection._connection = httplib.HTTPSConnection('twitter.com')
         return connection._connection
@@ -28,8 +29,7 @@ def oauth_request(
     token,
     parameters=None,
     signature_method=signature_method,
-    http_method='GET'
-):
+    http_method='GET'):
     req = oauth.OAuthRequest.from_consumer_and_token(
         consumer(), token=token, http_url=url,
         parameters=parameters, http_method=http_method
@@ -69,7 +69,8 @@ def api(url, token, http_method='GET', **kwargs):
         return json.loads(oauth_response(oauth_request(
             url, token, http_method=http_method, parameters=kwargs
         )))
-    except: pass
+    except: 
+        pass
     return None
 
 def is_authorized(token):

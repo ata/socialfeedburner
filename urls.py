@@ -21,6 +21,5 @@ urlpatterns = patterns('',
     (r'^older/(?P<before>\w+)/?$','newsfeed.views.older'),
     (r'^newsfeed/',include('newsfeed.urls')),
     (r'^socialauth/',include('socialauth.urls')),
-    (r'^twitterauth/',include('twitterauth.urls')),
     (r'^$','newsfeed.views.index'),
 )
