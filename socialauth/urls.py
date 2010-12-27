@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('socialauth.views',
     url(r'^$', 'index', name = 'socialauth'),
-    url(r'^profile$', 'profile', name = 'socialauth_profile'),
+    url(r'^register/?$', 'register', name = 'socialauth_register'),
     url(r'^twitter/connect/?$', 'twitter_connect', 
         name = 'socialauth_twitter_connect'),
     url(r'^twitter/connect/done/?$', 'twitter_connect_done', 

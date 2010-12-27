@@ -9,7 +9,6 @@
     {% include_media 'main.css' media='screen, projection' %}
     {% include_media 'print.css' media='print' %}
     <!--[if lt IE 8]>{% include_media 'ie.css' media='screen, projection' %}<![endif]-->
-    {% include_media 'main.js' %}
     {% block extra_head %}
     {% endblock extra_head %}
     <title>Social Feed Burner - {% block head_title %}{% endblock %}</title>
@@ -17,11 +16,13 @@
 <body>
     <div id="header">
         <div class="container">
-            <div class="span-18" id="webname">
-                <h1>Social Feed Burner</h1>
+            <div class="span-12" id="webname">
+                <h1>SocialFeedBurner</h1>
             </div>
-            <div class="span-6 last">
-                {% block logout %}{% endblock logout %}
+            <div class="span-12 last ar" id="head-status">
+                {% block head_status %}
+                <a href="{% url socialauth_register %}">Register</a>
+                {% endblock head_status %}
             </div>
         </div>
     </div>

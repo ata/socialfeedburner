@@ -7,21 +7,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from oauth import oauth
 from socialauth.utils import twitter
-from socialauth.models import *
+from socialauth.models import UserProfile, TwitterUserProfile
 
 def index(request):
-    return HttpResponse('Index connection')
-    
-def profile(request):
-    try:
-        form = UserCreationForm(instance=request.user)
-    except:
-        user = User.objects.get(id=request.session['user_id'])
-        form = UserCreationForm(instance=user)
+    return HttpResponse('Index')
+
+def register(request):
+    form = UserCreationForm()
+    saved = False
     if request.method == 'POST':
-        if form.validate():
-            form.save()
-    return render_to_response('socialauth/profile.html', {'form': form ,})
+        form = UserCreationForm(request.POST)
+        user = form.save()
+        UserProfile(user=user).save()
+        saved = True
+    
+    return render_to_response('socialauth/register.html',{
+        'form': form, 
+        'saved': saved})
 
 def twitter_connect(request):
     try:
@@ -43,6 +45,7 @@ def twitter_connect_done(request):
 
     # Actually login
     obj = twitter.is_authorized(token)
+    
     if obj is None:
         return render_to_response('socialauth/twitter_connect_error.html', {'username': True})
     try: 
@@ -54,10 +57,9 @@ def twitter_connect_done(request):
     twitter_profile.oauth_token = request.session['token']
     twitter_profile.oauth_token_key = token.key
     twitter_profile.oauth_token_secret = token.secret
+    twitter_profile.user = request.user
     twitter_profile.save()
-    request.session['user_id'] = twitter_profile.user.id
-    del request.session['token']
-    
+    #del request.session['token']
     return HttpResponseRedirect(reverse('newsfeed'))
 
     

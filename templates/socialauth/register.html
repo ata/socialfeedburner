@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load media %}
+
+
+{% block head_status %}
+<a href="{% url django.contrib.auth.views.login %}">Login</a>
+{% endblock head_status %}
+
+{% block content %}
+<div class="span-24">
+    {% if saved %}
+    <div class="success">Thank's please <a href="{% url django.contrib.auth.views.login %}">Login</a></div>
+    {% endif %}
+    <form method="post" action="{% url socialauth_register %}">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="submit" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock content %}

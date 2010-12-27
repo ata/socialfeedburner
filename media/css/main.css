@@ -20,6 +20,9 @@ p {
 .ac{
     text-align:center;
 }
+.ar{
+    text-align:right;
+}
 
 
 /**************************************/
@@ -146,9 +149,10 @@ ul#topnav a:hover, ul#topnav a:active {
 
 .post{
     margin-bottom:20px;
-    background:#EFEFEF;
+    background:#FEFEFE;
     position:relative;
 }
+/*
 
 .post img{
     border:1px solid #7F7F7F;
@@ -195,6 +199,7 @@ ul#topnav a:hover, ul#topnav a:active {
     position:absolute;
     left:310px;
 }
+*/
 
 #loading{
     display:none;
@@ -204,9 +209,13 @@ ul#topnav a:hover, ul#topnav a:active {
     background:#E6E6FA;
 }
 
-#connect-container{
-    margin:20px 0;
+#head-status a:link,#head-status a:visited{
+    color:#fff;
+    font-size:15px;
+    font-weight:bold;
 }
+
+
 
 
 

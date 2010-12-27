@@ -1,22 +1,24 @@
+from django.utils import simplejson as json
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
-from socialauth.decorators import need_profile
-from socialauth.utils import twitter
-from socialauth.models import *
-from oauth import oauth
+from newsfeed.utils import get_default_posts, get_older_posts
 
-@need_profile
+@login_required
 def index(request):
-    #t = TwitterUserProfile.objects.get()
-    #token = oauth.OAuthToken.from_string(t.oauth_token)
-    #news = twitter.api('http://api.twitter.com/1/statuses/friends_timeline.json',token)
     return render_to_response('newsfeed/index.html',{'user': request.user})
 
-@need_profile
-def newest(request):
-    return HttpResponse('index')
+@login_required
+def firstload(request):
+    posts = get_default_posts(request.user)
+    return HttpResponse(json.dumps(posts), mimetype='application/json')
+
+@login_required
+def newest(request, since_id):
+    posts = get_newest_posts(request.user, since_id)
+    return HttpResponse(json.dumps(posts), mimetype='application/json')
     
-@need_profile
-def older(request):
-    return HttpResponse('index')
+@login_required
+def older(request, max_id):
+    posts = get_older_posts(request.user, max_id)
+    return HttpResponse(json.dumps(posts), mimetype='application/json')

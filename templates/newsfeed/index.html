@@ -2,10 +2,10 @@
 {% load media %}
 
 {% block extra_head %}
+{% include_media 'main.js' %}
 {% comment %}
 <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
 <script type="text/javascript">
-
 jQuery(document).ready(function(){
     FB.init({ 
         appId: '{{s}}',
@@ -18,21 +18,34 @@ jQuery(document).ready(function(){
 </script>
 {% endcomment %}
 {% endblock extra_head %}
-{% block logout %}
+{% block head_status %}
+    {% if user.profile.has_twitter_connected %}
+        [twitter already connected]
+    {% else %}
+        <a href="{% url socialauth_twitter_connect %}">[connect to twitter]</a>
+    {% endif %}
+        
+    {% if user.profile.has_facebook_connected %}
+        [facebook already connected]
+    {% else %}
+        <a href="{% url socialauth_twitter_connect %}">[connect to facebook]</a>
+    {% endif %}
     <a href="/logout">Log Out</a>
-{% endblock logout %}
+    
+{% endblock head_status %}
 {% block content %}
 <div class="span-24 content">
     {% if user.profile.has_connected %}
-    <div id="posts">
-        User connected
+    <button class="span-18 last" id="newest" style="display:none"></button>
+    <div id="posts" class="span-18">
+        
     </div>
+    <button class="span-18 last" id="more">MORE</button>
     {% else %}
-    <a href="{% url socialauth_twitter_connect %}">
-        <img src="{% media_url 'images/connect-twitter.png' %}">
-    </a>
+    <div class="span-18">
+        User is not connected 
+    </div>
     {% endif %}
     
-    <div class="span-18 last" id="loading">Loading...</div>
 </div>
 {% endblock content %}
